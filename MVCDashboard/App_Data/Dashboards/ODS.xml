@@ -1,0 +1,24 @@
+<Dashboard>
+  <Title Text="ODS" />
+  <DataSources>
+    <ObjectDataSource Name="Object Data Source" ComponentName="objectDataSource1" />
+  </DataSources>
+  <Items>
+    <Grid ComponentName="gridDashboardItem1" Name="Grid 1" DataSource="objectDataSource1">
+      <DataItems>
+        <Dimension DataMember="SalesPerson" DefaultId="DataItem0" />
+      </DataItems>
+      <GridColumns>
+        <GridDimensionColumn>
+          <Dimension DefaultId="DataItem0" />
+        </GridDimensionColumn>
+      </GridColumns>
+      <GridOptions />
+    </Grid>
+  </Items>
+  <LayoutTree>
+    <LayoutGroup>
+      <LayoutItem DashboardItem="gridDashboardItem1" />
+    </LayoutGroup>
+  </LayoutTree>
+</Dashboard>

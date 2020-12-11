@@ -1,0 +1,28 @@
+@model MVCDashboard.LoginData
+
+@using DevExpress.DashboardWeb
+
+<style type="text/css">
+    .roleTable td, .roleTable th {
+        border: 1px solid black;
+        padding: 5px;
+    }
+</style>
+
+<h1>DashboardDifferentUserData Example</h1>
+
+@using (Html.BeginForm()) {
+    @Html.DevExpress().ComboBoxFor(m => m.UserName, settings => {
+        settings.Properties.NullText = "Select User";
+        settings.Properties.AllowNull = true;
+        settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+        settings.Properties.Items.Add("Admin");
+        settings.Properties.Items.Add("User");
+    }).GetHtml()
+    <br />
+    @Html.DevExpress().Button(settings => {
+        settings.Name = "btnSubmit";
+        settings.Text = "Login";
+        settings.UseSubmitBehavior = true;
+    }).GetHtml()
+}
