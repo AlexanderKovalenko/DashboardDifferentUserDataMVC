@@ -2,15 +2,21 @@
 <Dashboard>
   <Title Text="JSON" />
   <DataSources>
-    <JsonDataSource Name="JSON Data Source" ComponentName="jsonDataSource1" RootElement="Customers">
-    </JsonDataSource>
+    <JsonDataSource Name="JSON Data Source" RootElement="Customers" ComponentName="jsonDataSource1" />
   </DataSources>
+  <Parameters>
+    <Parameter Name="CountryPattern" Value="A" />
+  </Parameters>
   <Items>
     <Grid ComponentName="gridDashboardItem1" Name="Grid 1" DataSource="jsonDataSource1">
       <DataItems>
         <Dimension DataMember="ContactName" DefaultId="DataItem1" />
+        <Dimension DataMember="Country" DefaultId="DataItem0" />
       </DataItems>
       <GridColumns>
+        <GridDimensionColumn>
+          <Dimension DefaultId="DataItem0" />
+        </GridDimensionColumn>
         <GridDimensionColumn>
           <Dimension DefaultId="DataItem1" />
         </GridDimensionColumn>

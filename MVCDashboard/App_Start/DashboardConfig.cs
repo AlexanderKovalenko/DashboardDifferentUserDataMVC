@@ -1,13 +1,14 @@
+using System;
+using System.Web;
+using System.Web.Routing;
 using DevExpress.DashboardCommon;
 using DevExpress.DashboardWeb;
 using DevExpress.DashboardWeb.Mvc;
+using DevExpress.Data.Filtering;
 using DevExpress.DataAccess;
 using DevExpress.DataAccess.ConnectionParameters;
 using DevExpress.DataAccess.Json;
 using DevExpress.DataAccess.Web;
-using System;
-using System.Web;
-using System.Web.Routing;
 
 namespace MVCDashboard {
     public static class DashboardConfig {
@@ -20,6 +21,7 @@ namespace MVCDashboard {
 
             DashboardConfigurator.Default.CustomParameters += DashboardConfigurator_CustomParameters;
             DashboardConfigurator.Default.DataLoading += DashboardConfigurator_DataLoading;
+            DashboardConfigurator.Default.CustomFilterExpression += DashboardConfigurator_CustomFilterExpression;
             DashboardConfigurator.Default.ConfigureDataConnection += DashboardConfigurator_ConfigureDataConnection;
         }
 
@@ -32,10 +34,18 @@ namespace MVCDashboard {
             var userName = (string)HttpContext.Current.Session["CurrentUser"];
 
             if (userName == "Admin") {
-                e.Data = SalesPersonData.GetSalesData();
+                e.Data = SalesData.GetSalesData();
             }
             else if (userName == "User") {
-                e.Data = SalesPersonData.GetSalesDataLimited();
+                e.Data = SalesData.GetSalesDataLimited();
+            }
+        }
+
+        private static void DashboardConfigurator_CustomFilterExpression(object sender, CustomFilterExpressionWebEventArgs e) {
+            var userName = (string)HttpContext.Current.Session["CurrentUser"];
+
+            if (userName == "User" && e.QueryName == "Categories") {
+                e.FilterExpression = CriteriaOperator.Parse("StartsWith([CategoryName], 'C')");
             }
         }
 
@@ -52,12 +62,22 @@ namespace MVCDashboard {
             }
             else if (e.DataSourceName == "JSON Data Source") {
                 if (userName == "Admin") {
-                    Uri remoteUri = new Uri("https://raw.githubusercontent.com/DevExpress-Examples/DataSources/master/JSON/customers.json");
-                    ((JsonSourceConnectionParameters)e.ConnectionParameters).JsonSource = new UriJsonSource(remoteUri);
+                    Uri fileUri = new Uri(HttpContext.Current.Server.MapPath(@"~/App_Data/customers.json"), UriKind.RelativeOrAbsolute);
+                    ((JsonSourceConnectionParameters)e.ConnectionParameters).JsonSource = new UriJsonSource(fileUri);
+
                 }
                 else if (userName == "User") {
-                    Uri fileUri = new Uri(HttpContext.Current.Server.MapPath(@"~/App_Data/customers2.json"), UriKind.RelativeOrAbsolute);
-                    ((JsonSourceConnectionParameters)e.ConnectionParameters).JsonSource = new UriJsonSource(fileUri);
+                    //Uri fileUri = new Uri(HttpContext.Current.Server.MapPath(@"~/App_Data/customers2.json"), UriKind.RelativeOrAbsolute);
+                    //((JsonSourceConnectionParameters)e.ConnectionParameters).JsonSource = new UriJsonSource(fileUri);
+                    Uri remoteUri = new Uri("http://northwind.netcore.io/query/customers.json");
+                    var jsonSource = new UriJsonSource(remoteUri);
+
+                    jsonSource.PathParameters.AddRange(new[] {
+                        // "CountryPattern" is a dashboard parameter whose value is used for the "CountryStartsWith" path parameter.
+                        new PathParameter("CountryStartsWith", typeof(string), new Expression("Parameters.CountryPattern"))
+                    });
+
+                    ((JsonSourceConnectionParameters)e.ConnectionParameters).JsonSource = jsonSource;
                 }
             }
             else if (e.DataSourceName == "Excel Data Source") {

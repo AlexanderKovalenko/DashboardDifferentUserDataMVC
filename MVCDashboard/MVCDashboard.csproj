@@ -261,6 +261,7 @@
     <Content Include="App_Data\Sales.xlsx" />
     <Content Include="App_Data\Sales2.xlsx" />
     <Content Include="App_Data\SalesPersonExtract.dat" />
+    <Content Include="App_Data\customers.json" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
@@ -295,7 +296,7 @@
     </Compile>
     <Compile Include="Models\EFNorthwindData.cs" />
     <Compile Include="Models\LoginData.cs" />
-    <Compile Include="Models\SalesPersonData.cs" />
+    <Compile Include="Models\SalesData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

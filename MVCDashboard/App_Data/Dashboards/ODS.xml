@@ -1,3 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Dashboard>
   <Title Text="ODS" />
   <DataSources>
@@ -6,12 +7,16 @@
   <Items>
     <Grid ComponentName="gridDashboardItem1" Name="Grid 1" DataSource="objectDataSource1">
       <DataItems>
-        <Dimension DataMember="SalesPerson" DefaultId="DataItem0" />
+        <Dimension DataMember="Country" DefaultId="DataItem0" />
+        <Measure DataMember="Quantity" DefaultId="DataItem1" />
       </DataItems>
       <GridColumns>
         <GridDimensionColumn>
           <Dimension DefaultId="DataItem0" />
         </GridDimensionColumn>
+        <GridMeasureColumn>
+          <Measure DefaultId="DataItem1" />
+        </GridMeasureColumn>
       </GridColumns>
       <GridOptions />
     </Grid>
