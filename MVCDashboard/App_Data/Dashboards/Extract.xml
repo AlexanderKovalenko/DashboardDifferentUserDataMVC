@@ -2,12 +2,12 @@
 <Dashboard>
   <Title Text="Extract" />
   <DataSources>
-    <ExtractFileDataSource ComponentName="extractFileDataSource1" Name="Extract Data Source">
+    <ExtractFileDataSource ComponentName="extractSales" Name="Extract Data Source">
       <Parameters />
     </ExtractFileDataSource>
   </DataSources>
   <Items>
-    <Grid ComponentName="gridDashboardItem1" Name="Grid 1" DataSource="extractFileDataSource1">
+    <Grid ComponentName="gridDashboardItem1" Name="Grid 1" DataSource="extractSales">
       <DataItems>
         <Dimension DataMember="OrderDate" DateTimeGroupInterval="None" DefaultId="DataItem0" />
         <Dimension DataMember="Sales Person" DefaultId="DataItem1" />

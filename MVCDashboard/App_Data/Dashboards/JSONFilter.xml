@@ -1,14 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Dashboard>
-  <Title Text="EF" />
+  <Title Text="JSON (custom filter expression)" />
   <DataSources>
-    <EFDataSource Name="Entity Framework Data Source" Source="NorthwindDbContext, MVCDashboard, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" ComponentName="efCategories" />
+    <JsonDataSource Name="JSON Data Source" RootElement="results" ComponentName="jsonCustomerCountries" />
   </DataSources>
+  <Parameters>
+    <Parameter Name="CountryPattern" Value="A" />
+  </Parameters>
   <Items>
-    <Grid ComponentName="gridDashboardItem1" Name="Grid 1" DataSource="efCategories" DataMember="Categories">
+    <Grid ComponentName="gridDashboardItem1" Name="Grid 1" DataSource="jsonCustomerCountries">
       <DataItems>
-        <Dimension DataMember="CategoryName" DefaultId="DataItem1" />
-        <Dimension DataMember="CategoryID" DefaultId="DataItem0" />
+        <Dimension DataMember="contactName" DefaultId="DataItem1" />
+        <Dimension DataMember="country" DefaultId="DataItem0" />
       </DataItems>
       <GridColumns>
         <GridDimensionColumn>

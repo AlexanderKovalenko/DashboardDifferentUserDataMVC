@@ -2,10 +2,10 @@
 <Dashboard>
   <Title Text="ODS" />
   <DataSources>
-    <ObjectDataSource Name="Object Data Source" ComponentName="objectDataSource1" />
+    <ObjectDataSource Name="Object Data Source" ComponentName="odsSales" />
   </DataSources>
   <Items>
-    <Grid ComponentName="gridDashboardItem1" Name="Grid 1" DataSource="objectDataSource1">
+    <Grid ComponentName="gridDashboardItem1" Name="Grid 1" DataSource="odsSales">
       <DataItems>
         <Dimension DataMember="Country" DefaultId="DataItem0" />
         <Measure DataMember="Quantity" DefaultId="DataItem1" />

@@ -1,10 +1,10 @@
 <Dashboard>
   <Title Text="OLAP" />
   <DataSources>
-    <OLAPDataSource ComponentName="oLAPDataSource1" Name="OLAP Data Source" ConnectionName="olapConnection" />
+    <OLAPDataSource ComponentName="olapCustomers" Name="OLAP Data Source" ConnectionName="olapConnection" />
   </DataSources>
   <Items>
-    <Grid ComponentName="gridDashboardItem1" Name="Grid 1" DataSource="oLAPDataSource1">
+    <Grid ComponentName="gridDashboardItem1" Name="Grid 1" DataSource="olapCustomers">
       <DataItems>
         <Dimension DataMember="[Customer].[Customer].[Customer]" DefaultId="DataItem0" />
       </DataItems>

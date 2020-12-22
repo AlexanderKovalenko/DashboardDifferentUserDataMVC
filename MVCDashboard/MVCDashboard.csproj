@@ -222,12 +222,18 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\Dashboards\EF.xml" />
-    <Content Include="App_Data\Dashboards\Excel.xml" />
+    <Content Include="App_Data\Dashboards\Excel.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="App_Data\Dashboards\Extract.xml" />
-    <Content Include="App_Data\Dashboards\JSON.xml" />
+    <Content Include="App_Data\Dashboards\JSONFilter.xml" />
+    <Content Include="App_Data\Dashboards\JSON.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="App_Data\Dashboards\ODS.xml" />
     <Content Include="App_Data\Dashboards\OLAP.xml" />
     <Content Include="App_Data\Dashboards\SQL.xml" />
+    <Content Include="App_Data\Dashboards\SQLFilter.xml" />
     <Content Include="App_Data\nwind.mdb" />
     <Content Include="App_Data\nwind2.mdb" />
     <Content Include="Content\jquery-ui.css" />
@@ -277,19 +283,12 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\jquery.min.map" />
     <Content Include="Views\Home\Dashboard.cshtml" />
-    <None Include="Web.Debug.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
-    <None Include="Web.Release.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\DashboardConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Code\CustomDataSourceStorage.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
