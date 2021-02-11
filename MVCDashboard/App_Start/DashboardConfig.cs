@@ -16,6 +16,8 @@ namespace MVCDashboard {
 
             DashboardConfigurator.Default.SetDashboardStorage(new DashboardFileStorage(@"~/App_Data/Dashboards"));
 
+            //DashboardConfigurator.Default.SetDataSourceStorage(new CustomDataSourceStorage());
+
             DashboardConfigurator.Default.CustomParameters += DashboardConfigurator_CustomParameters;
             DashboardConfigurator.Default.DataLoading += DashboardConfigurator_DataLoading;
             DashboardConfigurator.Default.CustomFilterExpression += DashboardConfigurator_CustomFilterExpression;
@@ -30,7 +32,7 @@ namespace MVCDashboard {
         private static void DashboardConfigurator_DataLoading(object sender, DataLoadingWebEventArgs e) {
             var userName = (string)HttpContext.Current.Session["CurrentUser"];
 
-            if (e.DashboardId == "ODS" && e.DataSourceComponentName == "odsSales") {
+            if (e.DataId == "odsSales") {
                 if (userName == "Admin") {
                     e.Data = SalesData.GetSalesData();
                 }
@@ -61,7 +63,7 @@ namespace MVCDashboard {
                     ((CustomStringConnectionParameters)e.ConnectionParameters).ConnectionString = @"XpoProvider=MSAccess; Provider=Microsoft.Jet.OLEDB.4.0; Data Source=|DataDirectory|\nwind2.mdb;";
                 }
             }
-            else if (e.DataSourceName == "JSON Data Source") {
+            else if (e.ConnectionName == "jsonConnection") {
                 if (e.DashboardId == "JSON") {
                     string jsonFileName = "";
 
@@ -89,7 +91,7 @@ namespace MVCDashboard {
                     ((JsonSourceConnectionParameters)e.ConnectionParameters).JsonSource = jsonSource;
                 }
             }
-            else if (e.DataSourceName == "Excel Data Source") {
+            else if (e.ConnectionName == "excelConnection") {
                 if (userName == "Admin") {
                     ((ExcelDataSourceConnectionParameters)e.ConnectionParameters).FileName = HttpContext.Current.Server.MapPath(@"~/App_Data/Sales.xlsx");
                 }
@@ -105,7 +107,7 @@ namespace MVCDashboard {
                     throw new ApplicationException("You are not authorized to access OLAP data.");
                 }
             }
-            else if(e.DataSourceName == "Extract Data Source") {
+            else if(e.ConnectionName == "extractConnection") {
                 if (userName == "Admin") {
                     ((ExtractDataSourceConnectionParameters)e.ConnectionParameters).FileName = HttpContext.Current.Server.MapPath(@"~/App_Data/SalesPersonExtract.dat");
                 }

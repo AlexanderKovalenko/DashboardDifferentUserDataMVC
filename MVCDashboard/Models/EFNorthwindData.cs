@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Web;
+using System.ComponentModel;
 
 public class Category {
     public Category() {
@@ -17,6 +18,7 @@ public class Category {
 public class Product {
     [Key]
     public int ProductID { get; set; }
+
     public string ProductName { get; set; }
     public decimal? UnitPrice { get; set; }
     public short? UnitsOnOrder { get; set; }

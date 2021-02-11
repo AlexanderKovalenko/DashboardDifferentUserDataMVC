@@ -2,7 +2,7 @@
 <Dashboard>
   <Title Text="JSON (custom filter expression)" />
   <DataSources>
-    <JsonDataSource Name="JSON Data Source" RootElement="results" ComponentName="jsonCustomerCountries" />
+    <JsonDataSource Name="JSON Data Source" RootElement="results" ComponentName="jsonCustomerCountries" ConnectionName="jsonConnection" />
   </DataSources>
   <Parameters>
     <Parameter Name="CountryPattern" Value="A" />
