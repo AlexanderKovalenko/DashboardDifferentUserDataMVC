@@ -233,7 +233,7 @@
     <Content Include="App_Data\Dashboards\JSON.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="App_Data\Dashboards\ODS.xml" />
+    <Content Include="App_Data\Dashboards\Object.xml" />
     <Content Include="App_Data\Dashboards\OLAP.xml" />
     <Content Include="App_Data\Dashboards\SQL.xml" />
     <Content Include="App_Data\Dashboards\SQLFilter.xml" />
@@ -293,6 +293,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="CustomDataSourceStorage.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

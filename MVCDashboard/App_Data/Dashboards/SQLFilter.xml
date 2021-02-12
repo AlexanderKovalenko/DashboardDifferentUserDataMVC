@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Dashboard>
-  <Title Text="SQLFilter (custom filter expression)" />
+  <Title Text="SQL (custom filter expression)" />
   <DataSources>
     <SqlDataSource Name="SQL Data Source" ComponentName="sqlCategories">
       <Connection Name="sqlConnection" FromAppConfig="true" />

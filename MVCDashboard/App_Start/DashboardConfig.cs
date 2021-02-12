@@ -15,8 +15,7 @@ namespace MVCDashboard {
             routes.MapDashboardRoute("api/dashboard");
 
             DashboardConfigurator.Default.SetDashboardStorage(new DashboardFileStorage(@"~/App_Data/Dashboards"));
-
-            //DashboardConfigurator.Default.SetDataSourceStorage(new CustomDataSourceStorage());
+            DashboardConfigurator.Default.SetDataSourceStorage(new CustomDataSourceStorage());
 
             DashboardConfigurator.Default.CustomParameters += DashboardConfigurator_CustomParameters;
             DashboardConfigurator.Default.DataLoading += DashboardConfigurator_DataLoading;
