@@ -32,15 +32,13 @@ public class NorthwindDbContext : DbContext {
         var userName = (string)HttpContext.Current.Session["CurrentUser"];
 
         if (userName == "Admin") {
-            Database.Connection.ConnectionString = "data source=.;Initial Catalog=CustomNorthwindDB;integrated security=True";
+            Database.Connection.ConnectionString = "data source=.;Initial Catalog=CustomNorthwindDB_admin;integrated security=True";
         }
         else if (userName == "User") {
-            Database.Connection.ConnectionString = "data source=.;Initial Catalog=CustomNorthwindDB2;integrated security=True";
+            Database.Connection.ConnectionString = "data source=.;Initial Catalog=CustomNorthwindDB_user;integrated security=True";
         }
 
-        if (userName == "Admin") {
-            Database.SetInitializer(new NorthwindDbContextInitializer());
-        }
+        Database.SetInitializer(new NorthwindDbContextInitializer() { UserName = userName });
     }
 
     public DbSet<Category> Categories { get; set; }
@@ -48,17 +46,18 @@ public class NorthwindDbContext : DbContext {
 }
 
 public class NorthwindDbContextInitializer : DropCreateDatabaseIfModelChanges<NorthwindDbContext> {
+    public string UserName { get; set; }
     protected override void Seed(NorthwindDbContext context) {
         IList<Category> defaultCategories = new List<Category>();
 
-        defaultCategories.Add(new Category() { CategoryName = "Beverages" });
-        defaultCategories.Add(new Category() { CategoryName = "Condiments" });
-        defaultCategories.Add(new Category() { CategoryName = "Confections" });
-        defaultCategories.Add(new Category() { CategoryName = "Dairy Products" });
-        defaultCategories.Add(new Category() { CategoryName = "Grains/Cereals" });
-        defaultCategories.Add(new Category() { CategoryName = "Meat/Poultry" });
-        defaultCategories.Add(new Category() { CategoryName = "Produce" });
-        defaultCategories.Add(new Category() { CategoryName = "Seafood" });
+        defaultCategories.Add(new Category() { CategoryName = "Beverages_" + UserName });
+        defaultCategories.Add(new Category() { CategoryName = "Condiments_" + UserName });
+        defaultCategories.Add(new Category() { CategoryName = "Confections_" + UserName });
+        defaultCategories.Add(new Category() { CategoryName = "Dairy Products_" + UserName });
+        defaultCategories.Add(new Category() { CategoryName = "Grains/Cereals_" + UserName });
+        defaultCategories.Add(new Category() { CategoryName = "Meat/Poultry_" + UserName });
+        defaultCategories.Add(new Category() { CategoryName = "Produce_" + UserName });
+        defaultCategories.Add(new Category() { CategoryName = "Seafood_" + UserName });
 
         foreach (Category defaultCategory in defaultCategories)
             context.Categories.Add(defaultCategory);

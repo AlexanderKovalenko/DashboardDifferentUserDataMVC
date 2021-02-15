@@ -54,30 +54,31 @@ namespace MVCDashboard {
         private static void DashboardConfigurator_ConfigureDataConnection(object sender, ConfigureDataConnectionWebEventArgs e) {
             var userName = (string)HttpContext.Current.Session["CurrentUser"];
 
-            if (e.ConnectionName == "sqlConnection") {
+            if (e.ConnectionName == "sqlCategories") {
                 if (userName == "Admin") {
-                    ((CustomStringConnectionParameters)e.ConnectionParameters).ConnectionString = @"XpoProvider=MSAccess; Provider=Microsoft.Jet.OLEDB.4.0; Data Source=|DataDirectory|\nwind.mdb;";
+                    ((CustomStringConnectionParameters)e.ConnectionParameters).ConnectionString = @"XpoProvider=MSAccess; Provider=Microsoft.Jet.OLEDB.4.0; Data Source=|DataDirectory|\nwind_admin.mdb;";
                 }
                 else if (userName == "User") {
-                    ((CustomStringConnectionParameters)e.ConnectionParameters).ConnectionString = @"XpoProvider=MSAccess; Provider=Microsoft.Jet.OLEDB.4.0; Data Source=|DataDirectory|\nwind2.mdb;";
+                    ((CustomStringConnectionParameters)e.ConnectionParameters).ConnectionString = @"XpoProvider=MSAccess; Provider=Microsoft.Jet.OLEDB.4.0; Data Source=|DataDirectory|\nwind_user.mdb;";
                 }
             }
-            else if (e.ConnectionName == "jsonConnection") {
+            else if (e.ConnectionName == "jsonCustomers") {
                 if (e.DashboardId == "JSON") {
                     string jsonFileName = "";
 
                     if (userName == "Admin") {
-                        jsonFileName = "customers.json";
+                        jsonFileName = "customers_admin.json";
                     }
                     else if (userName == "User") {
-                        jsonFileName = "customers2.json";
+                        jsonFileName = "customers_user.json";
                     }
 
                     Uri fileUri = new Uri(HttpContext.Current.Server.MapPath(@"~/App_Data/" + jsonFileName), UriKind.RelativeOrAbsolute);
                     ((JsonSourceConnectionParameters)e.ConnectionParameters).JsonSource = new UriJsonSource(fileUri);
                 }
                 else if (e.DashboardId == "JSONFilter") {
-                    Uri remoteUri = new Uri("http://northwind.netcore.io/query/customers.json");
+                    //Uri remoteUri = new Uri("http://northwind.netcore.io/query/customers.json");
+                    Uri remoteUri = new Uri("http://localhost:51621/Home/GetCustomers");
                     var jsonSource = new UriJsonSource(remoteUri);
 
                     if (userName == "User") {
@@ -90,15 +91,15 @@ namespace MVCDashboard {
                     ((JsonSourceConnectionParameters)e.ConnectionParameters).JsonSource = jsonSource;
                 }
             }
-            else if (e.ConnectionName == "excelConnection") {
+            else if (e.ConnectionName == "excelSales") {
                 if (userName == "Admin") {
-                    ((ExcelDataSourceConnectionParameters)e.ConnectionParameters).FileName = HttpContext.Current.Server.MapPath(@"~/App_Data/Sales.xlsx");
+                    ((ExcelDataSourceConnectionParameters)e.ConnectionParameters).FileName = HttpContext.Current.Server.MapPath(@"~/App_Data/sales_admin.xlsx");
                 }
                 else if (userName == "User") {
-                    ((ExcelDataSourceConnectionParameters)e.ConnectionParameters).FileName = HttpContext.Current.Server.MapPath(@"~/App_Data/Sales2.xlsx");
+                    ((ExcelDataSourceConnectionParameters)e.ConnectionParameters).FileName = HttpContext.Current.Server.MapPath(@"~/App_Data/sales_user.xlsx");
                 }
             }
-            else if (e.ConnectionName == "olapConnection") {
+            else if (e.ConnectionName == "olapAdventureWorks") {
                 if (userName == "Admin") {
                     ((OlapConnectionParameters)e.ConnectionParameters).ConnectionString = @"provider=MSOLAP;data source=http://demos.devexpress.com/Services/OLAP/msmdpump.dll;initial catalog=Adventure Works DW Standard Edition;cube name=Adventure Works;";
                 }
@@ -106,7 +107,7 @@ namespace MVCDashboard {
                     throw new ApplicationException("You are not authorized to access OLAP data.");
                 }
             }
-            else if(e.ConnectionName == "extractConnection") {
+            else if(e.ConnectionName == "extractSalesPerson") {
                 if (userName == "Admin") {
                     ((ExtractDataSourceConnectionParameters)e.ConnectionParameters).FileName = HttpContext.Current.Server.MapPath(@"~/App_Data/SalesPersonExtract.dat");
                 }

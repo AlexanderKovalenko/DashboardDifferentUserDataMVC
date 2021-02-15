@@ -2,7 +2,7 @@
 <Dashboard>
   <Title Text="JSON (custom filter expression)" />
   <DataSources>
-    <JsonDataSource Name="JSON Data Source" RootElement="results" ComponentName="jsonCustomerCountries" ConnectionName="jsonConnection" />
+    <JsonDataSource Name="JSON Data Source" ComponentName="jsonCustomerCountries" ConnectionName="jsonCustomers" />
   </DataSources>
   <Parameters>
     <Parameter Name="CountryPattern" Value="A" />
@@ -10,8 +10,8 @@
   <Items>
     <Grid ComponentName="gridDashboardItem1" Name="Grid 1" DataSource="jsonCustomerCountries">
       <DataItems>
-        <Dimension DataMember="contactName" DefaultId="DataItem1" />
-        <Dimension DataMember="country" DefaultId="DataItem0" />
+        <Dimension DataMember="ContactName" DefaultId="DataItem1" />
+        <Dimension DataMember="Country" DefaultId="DataItem0" />
       </DataItems>
       <GridColumns>
         <GridDimensionColumn>

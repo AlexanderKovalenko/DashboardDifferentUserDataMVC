@@ -18,7 +18,7 @@ public class CustomDataSourceStorage : IDataSourceStorage {
     private const string efDataSourceId = "Entity Framework Data Source";
 
     public CustomDataSourceStorage() {
-        DashboardSqlDataSource sqlDataSource = new DashboardSqlDataSource(sqlDataSourceId);
+        DashboardSqlDataSource sqlDataSource = new DashboardSqlDataSource(sqlDataSourceId, "sqlCategories");
         SelectQuery query = SelectQueryFluentBuilder
             .AddTable("Categories")
             .SelectAllColumnsFromTable()
@@ -27,21 +27,21 @@ public class CustomDataSourceStorage : IDataSourceStorage {
 
         DashboardJsonDataSource jsonDataSource = new DashboardJsonDataSource(jsonDataSourceId) {
             RootElement = "Customers",
-            ConnectionName = "jsonConnection"
+            ConnectionName = "jsonCustomers"
         };
 
         DashboardObjectDataSource objDataSource = new DashboardObjectDataSource(odsDataSourceId) {
-            DataId = "ods"
+            DataId = "odsSales"
         };
 
-        DashboardOlapDataSource olapDataSource = new DashboardOlapDataSource(olapDataSourceId, "olapConnection");
+        DashboardOlapDataSource olapDataSource = new DashboardOlapDataSource(olapDataSourceId, "olapAdventureWorks");
 
         DashboardExtractDataSource extractDataSource = new DashboardExtractDataSource(extractDataSourceId) {
-            ConnectionName = "extractConnection"
+            ConnectionName = "extractSalesPerson"
         };
 
         DashboardExcelDataSource excelDataSource = new DashboardExcelDataSource(excelDataSourceId) {
-            ConnectionName = "excelConnection",
+            ConnectionName = "excelSales",
             SourceOptions = new ExcelSourceOptions(new ExcelWorksheetSettings("Sheet1"))
         };
 

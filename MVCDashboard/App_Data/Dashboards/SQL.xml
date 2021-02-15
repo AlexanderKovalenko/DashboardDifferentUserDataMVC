@@ -3,7 +3,7 @@
   <Title Text="SQL (different connection strings)" />
   <DataSources>
     <SqlDataSource Name="SQL Data Source" ComponentName="sqlCategories">
-      <Connection Name="sqlConnection" FromAppConfig="true" />
+      <Connection Name="sqlCategories" FromAppConfig="true" />
       <Query Type="SelectQuery" Name="Categories">
         <Tables>
           <Table Name="Categories" />

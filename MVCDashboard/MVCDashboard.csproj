@@ -229,7 +229,9 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="App_Data\Dashboards\Extract.xml" />
-    <Content Include="App_Data\Dashboards\JSONFilter.xml" />
+    <Content Include="App_Data\Dashboards\JSONFilter.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="App_Data\Dashboards\JSON.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -237,8 +239,9 @@
     <Content Include="App_Data\Dashboards\OLAP.xml" />
     <Content Include="App_Data\Dashboards\SQL.xml" />
     <Content Include="App_Data\Dashboards\SQLFilter.xml" />
-    <Content Include="App_Data\nwind.mdb" />
-    <Content Include="App_Data\nwind2.mdb" />
+    <None Include="App_Data\customers_filter.json" />
+    <Content Include="App_Data\nwind_admin.mdb" />
+    <Content Include="App_Data\nwind_user.mdb" />
     <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\jquery-ui.min.css" />
     <Content Include="Global.asax" />
@@ -266,11 +269,11 @@
     <Content Include="Scripts\knockout-3.3.0.debug.js" />
     <Content Include="Scripts\knockout-3.3.0.js" />
     <Content Include="packages.config" />
-    <Content Include="App_Data\customers2.json" />
-    <Content Include="App_Data\Sales.xlsx" />
-    <Content Include="App_Data\Sales2.xlsx" />
+    <Content Include="App_Data\customers_user.json" />
+    <Content Include="App_Data\sales_admin.xlsx" />
+    <Content Include="App_Data\sales_user.xlsx" />
     <Content Include="App_Data\SalesPersonExtract.dat" />
-    <Content Include="App_Data\customers.json" />
+    <Content Include="App_Data\customers_admin.json" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
@@ -292,6 +295,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Models\Customer.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="CustomDataSourceStorage.cs" />
     <Compile Include="Global.asax.cs">
@@ -327,7 +331,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>59621</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:59621/</IISUrl>
+          <IISUrl>http://localhost:51621/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

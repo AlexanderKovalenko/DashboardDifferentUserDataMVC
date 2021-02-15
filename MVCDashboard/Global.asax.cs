@@ -1,10 +1,8 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
+using DevExpress.Security.Resources;
 
 namespace MVCDashboard {
     // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
@@ -22,6 +20,10 @@ namespace MVCDashboard {
             ModelBinders.Binders.DefaultBinder = new DevExpress.Web.Mvc.DevExpressEditorsBinder();
 
             DevExpress.Web.ASPxWebControl.CallbackError += Application_Error;
+  
+            AccessSettings.DataResources.SetRules(
+                UrlAccessRule.Allow("http://localhost:51621/Home"), 
+                DirectoryAccessRule.Allow(Server.MapPath(@"~/App_Data")));
         }
 
         protected void Application_Error(object sender, EventArgs e) {

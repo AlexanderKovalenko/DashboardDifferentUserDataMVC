@@ -1,7 +1,7 @@
 <Dashboard>
   <Title Text="OLAP" />
   <DataSources>
-    <OLAPDataSource ComponentName="olapCustomers" Name="OLAP Data Source" ConnectionName="olapConnection" />
+    <OLAPDataSource ComponentName="olapCustomers" Name="OLAP Data Source" ConnectionName="olapAdventureWorks" />
   </DataSources>
   <Items>
     <Grid ComponentName="gridDashboardItem1" Name="Grid 1" DataSource="olapCustomers">
