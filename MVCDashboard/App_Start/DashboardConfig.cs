@@ -6,8 +6,8 @@ using DevExpress.DashboardWeb;
 using DevExpress.DashboardWeb.Mvc;
 using DevExpress.Data.Filtering;
 using DevExpress.DataAccess;
-using DevExpress.DataAccess.ConnectionParameters;
 using DevExpress.DataAccess.Json;
+using DevExpress.DataAccess.ConnectionParameters;
 
 namespace MVCDashboard {
     public static class DashboardConfig {
@@ -23,11 +23,13 @@ namespace MVCDashboard {
             DashboardConfigurator.Default.ConfigureDataConnection += DashboardConfigurator_ConfigureDataConnection;
         }
 
+        // Configure user-specific data caching
         private static void DashboardConfigurator_CustomParameters(object sender, CustomParametersWebEventArgs e) {
             var userName = (string)HttpContext.Current.Session["CurrentUser"];
             e.Parameters.Add(new Parameter("UserRole", typeof(string), userName));
         }
 
+        // Conditional data loading for ObjectDataSource
         private static void DashboardConfigurator_DataLoading(object sender, DataLoadingWebEventArgs e) {
             var userName = (string)HttpContext.Current.Session["CurrentUser"];
 
@@ -41,25 +43,18 @@ namespace MVCDashboard {
             }
         }
 
-        private static void DashboardConfigurator_CustomFilterExpression(object sender, CustomFilterExpressionWebEventArgs e) {
-            var userName = (string)HttpContext.Current.Session["CurrentUser"];
-
-            if (e.DashboardId == "SQLFilter" && e.QueryName == "Categories") {
-                if (userName == "User") {
-                    e.FilterExpression = CriteriaOperator.Parse("StartsWith([CategoryName], 'C')");
-                }
-            }
-        }
-
+        // Conditional data loading for other datasource types
         private static void DashboardConfigurator_ConfigureDataConnection(object sender, ConfigureDataConnectionWebEventArgs e) {
             var userName = (string)HttpContext.Current.Session["CurrentUser"];
 
             if (e.ConnectionName == "sqlCategories") {
+                var sqlConnectionParameters = e.ConnectionParameters as CustomStringConnectionParameters;
+
                 if (userName == "Admin") {
-                    ((CustomStringConnectionParameters)e.ConnectionParameters).ConnectionString = @"XpoProvider=MSAccess; Provider=Microsoft.Jet.OLEDB.4.0; Data Source=|DataDirectory|\nwind_admin.mdb;";
+                    sqlConnectionParameters.ConnectionString = @"XpoProvider=MSAccess;Provider=Microsoft.Jet.OLEDB.4.0;Data Source=|DataDirectory|\nwind_admin.mdb;";
                 }
                 else if (userName == "User") {
-                    ((CustomStringConnectionParameters)e.ConnectionParameters).ConnectionString = @"XpoProvider=MSAccess; Provider=Microsoft.Jet.OLEDB.4.0; Data Source=|DataDirectory|\nwind_user.mdb;";
+                    sqlConnectionParameters.ConnectionString = @"XpoProvider=MSAccess;Provider=Microsoft.Jet.OLEDB.4.0;Data Source=|DataDirectory|\nwind_user.mdb;";
                 }
             }
             else if (e.ConnectionName == "jsonCustomers") {
@@ -73,12 +68,11 @@ namespace MVCDashboard {
                         jsonFileName = "customers_user.json";
                     }
 
-                    Uri fileUri = new Uri(HttpContext.Current.Server.MapPath(@"~/App_Data/" + jsonFileName), UriKind.RelativeOrAbsolute);
+                    var fileUri = new Uri(HttpContext.Current.Server.MapPath(@"~/App_Data/" + jsonFileName), UriKind.RelativeOrAbsolute);
                     ((JsonSourceConnectionParameters)e.ConnectionParameters).JsonSource = new UriJsonSource(fileUri);
                 }
                 else if (e.DashboardId == "JSONFilter") {
-                    //Uri remoteUri = new Uri("http://northwind.netcore.io/query/customers.json");
-                    Uri remoteUri = new Uri("http://localhost:51621/Home/GetCustomers");
+                    var remoteUri = new Uri(GetBaseUrl() + "Home/GetCustomers");
                     var jsonSource = new UriJsonSource(remoteUri);
 
                     if (userName == "User") {
@@ -92,11 +86,13 @@ namespace MVCDashboard {
                 }
             }
             else if (e.ConnectionName == "excelSales") {
+                var excelConnectionParameters = e.ConnectionParameters as ExcelDataSourceConnectionParameters;
+
                 if (userName == "Admin") {
-                    ((ExcelDataSourceConnectionParameters)e.ConnectionParameters).FileName = HttpContext.Current.Server.MapPath(@"~/App_Data/sales_admin.xlsx");
+                    excelConnectionParameters.FileName = HttpContext.Current.Server.MapPath(@"~/App_Data/sales_admin.xlsx");
                 }
                 else if (userName == "User") {
-                    ((ExcelDataSourceConnectionParameters)e.ConnectionParameters).FileName = HttpContext.Current.Server.MapPath(@"~/App_Data/sales_user.xlsx");
+                    excelConnectionParameters.FileName = HttpContext.Current.Server.MapPath(@"~/App_Data/sales_user.xlsx");
                 }
             }
             else if (e.ConnectionName == "olapAdventureWorks") {
@@ -115,6 +111,28 @@ namespace MVCDashboard {
                     throw new ApplicationException("You are not authorized to access Extract data.");
                 }
             }
+        }
+
+        // Custom data filtering for SqlDataSource
+        private static void DashboardConfigurator_CustomFilterExpression(object sender, CustomFilterExpressionWebEventArgs e) {
+            var userName = (string)HttpContext.Current.Session["CurrentUser"];
+
+            if (e.DashboardId == "SQLFilter" && e.QueryName == "Categories") {
+                if (userName == "User") {
+                    e.FilterExpression = CriteriaOperator.Parse("StartsWith([CategoryName], 'C')");
+                }
+            }
+        }
+
+        private static string GetBaseUrl() {
+            var request = HttpContext.Current.Request;
+            var appRootFolder = request.ApplicationPath;
+
+            if (!appRootFolder.EndsWith("/")) {
+                appRootFolder += "/";
+            }
+
+            return string.Format("{0}://{1}{2}", request.Url.Scheme, request.Url.Authority, appRootFolder);
         }
     }
 }

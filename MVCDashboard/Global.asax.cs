@@ -20,10 +20,6 @@ namespace MVCDashboard {
             ModelBinders.Binders.DefaultBinder = new DevExpress.Web.Mvc.DevExpressEditorsBinder();
 
             DevExpress.Web.ASPxWebControl.CallbackError += Application_Error;
-  
-            AccessSettings.DataResources.SetRules(
-                UrlAccessRule.Allow("http://localhost:51621/Home"), 
-                DirectoryAccessRule.Allow(Server.MapPath(@"~/App_Data")));
         }
 
         protected void Application_Error(object sender, EventArgs e) {
